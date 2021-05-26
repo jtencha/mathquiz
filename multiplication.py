@@ -4,7 +4,7 @@ from datetime import datetime
 #run this as a python3 program in terminal
 
 from send_as_email import send_as_email
-email_results_to_overlord = False
+email_results_to_overlord = True
 #overlord_email = "" Put your email here where you want it sent.
 
 print("Benjamin's Mulitplication Quiz!")
@@ -33,7 +33,7 @@ while not proceed:
     questions = input("How many questions would you like to do today? ")
     try:
         number_of_questions = int(questions)
-        if number_of_questions <= 9 or number_of_questions >= 101:
+        if number_of_questions <= 29 or number_of_questions >= 101:
             print("Error: Pick between 30 and 100")
             #Note: I designed this for my sister so that is why there is a limit.
         else:
