@@ -20,9 +20,7 @@ while not proceed:
             print("You need to pick between 10-100! \n")
         elif int(max_inq) == max:
             proceed = True
-        else:
-            print("Sorry, I didn't catch that\n")
-    except:
+    except ValueError:
         print("Sorry, I didn't catch that.\n")
 
 numbers = [x for x in range(2,max)]
@@ -128,7 +126,7 @@ print("Your total number of points was {0}!".format(points))
 if email_results_to_overlord:
     email_text = "{0} of {1} correct\n\n{2}\n\n".format(num_correct, number_of_questions, "\n".join(missed))
     email_text += "\n".join(times)
-    email_text = "User finished with {0} points".format(points)
+    email_text += "User finished with {0} points".format(points)
     email_result = send_as_email(overlord_email,email_text)
     if email_result:
         print("\nSending results to {0}".format(overlord_email))
