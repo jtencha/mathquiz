@@ -1,29 +1,17 @@
 import random
 import time
 from datetime import datetime
-#run this as a python3 program in terminal
 
 from send_as_email import send_as_email
 email_results_to_overlord = True
-#overlord_email = "" Put your email here where you want it sent.
+overlord_email = ""
 
-print("Benjamin's Mulitplication Quiz!")
+print("Mulitplication Quiz!")
+print("Last Updated: 7/2/2021")
 
 points = 0
-proceed = False
 
-while not proceed:
-    max_inq = input("Enter max range for numbers: ")
-    try:
-        max = int(max_inq)
-        if int(max) >= 100 or int(max) <= 10:
-            print("You need to pick between 10-100! \n")
-        elif int(max_inq) == max:
-            proceed = True
-    except ValueError:
-        print("Sorry, I didn't catch that.\n")
-
-numbers = [x for x in range(2,max)]
+numbers = [x for x in range(2,13)]
 
 proceed = False
 
@@ -32,12 +20,11 @@ while not proceed:
     try:
         number_of_questions = int(questions)
         if number_of_questions <= 29 or number_of_questions >= 101:
-            print("Error: Pick between 30 and 100")
-            #Note: I designed this for my sister so that is why there is a limit.
+            print("\nError: Pick between 30 and 100\n")
         else:
             proceed = True
     except:
-        print("Error: Do not include letters/symbols")
+        print("\nError: Do not include letters/symbols\n")
 
 num_correct = 0
 missed = list()
@@ -49,17 +36,19 @@ for question_number in range(1,number_of_questions+1):
     num_one = random.choice(numbers)
     num_two = random.choice(numbers)
 
-    while True:
+    proceed = False
+
+    while not proceed:
+        start = time.time()
+        print (str(num_one) + " * " + str(num_two))
+        answer = input("What is the answer? ")
+        correct_answer = num_one * num_two
         try:
-            start = time.time()
-            print (str(num_one) + " * " + str(num_two))
-            answer = int(input("What is the answer? "))
-            correct_answer = num_one * num_two
+            answer = float(answer)
+            proceed = True
         except ValueError:
             print("\nYour answer contained something other than a number.\n ")
             continue
-        else:
-            break
 
     ans_time = time.time()
     time_to_answer = ans_time - start
@@ -126,7 +115,6 @@ print("Your total number of points was {0}!".format(points))
 if email_results_to_overlord:
     email_text = "{0} of {1} correct\n\n{2}\n\n".format(num_correct, number_of_questions, "\n".join(missed))
     email_text += "\n".join(times)
-    email_text += "User finished with {0} points".format(points)
     email_result = send_as_email(overlord_email,email_text)
     if email_result:
         print("\nSending results to {0}".format(overlord_email))
