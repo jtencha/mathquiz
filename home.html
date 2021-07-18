@@ -1,0 +1,57 @@
+<html>
+<title>Orion - Home</title>
+<body>
+<head>
+<link rel="stylesheet" href="static/style.css" type="text/css">
+</head>
+<center>
+<!--<h1>Orion</h1>-->
+<nav>
+	<a href="/">Home</a>
+	<a href="/scoreboard">Scoreboard</a>
+	<a href="/contact">Contact</a>
+	<div class="animation start-home"></div>
+</nav>
+
+<style>
+.container 		{
+	font-family:'Roboto';
+	width:800px;
+	margin:30px auto 0;
+	display:block;
+	//text-align: left;
+	background:#FFF;
+	padding:10px 50px 50px;
+}
+.sololabel {
+	color:#5264AE;
+	font-size: 14;
+}
+</style>
+
+<center>
+<div class="container">
+
+<br><br>
+<h3>{{message}}</h3>
+<form action = "/startquiz" method="post" enctype="multipart/form-data">
+
+<h3>Need to make html form inputs (all with IDs and names in html) here for:
+<li> Type of quiz (multi/div/mixed) ... drop down with one selection?</li>
+<li> Number of questions ... drop down with choices?</li>
+<li> Difficulty? (easy/medium/hard?) ... drop down with choices?</li>
+<li> Other things?</li>
+<br>
+Once you have that set up here, we can work on handling the form submission and start the quiz
+</h3>
+
+<br><br>
+<button name="start-button">
+Go!</button>
+<br>
+
+</form>
+</center>
+
+</body>
+</html>
