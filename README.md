@@ -1,4 +1,6 @@
 # mathquiz
+Notice: The front-end html/css was designed by my father because I don't know html/css that well. Python is all done by me. I tried to make this program a lot more readable than some of my others :kek:
+
 Web Version:
 
 Install package requirements if not using Anaconda
