@@ -36,18 +36,33 @@
 <h3>{{message}}</h3>
 <form action = "/startquiz" method="post" enctype="multipart/form-data">
 
-<h3>Need to make html form inputs (all with IDs and names in html) here for:
-<li> Type of quiz (multi/div/mixed) ... drop down with one selection?</li>
-<li> Number of questions ... drop down with choices?</li>
-<li> Difficulty? (easy/medium/hard?) ... drop down with choices?</li>
-<li> Other things?</li>
+<h1>Math Quiz</h1>
+<h2>Version 1.0</h2>
+<h2>Click "Go" to start the quiz!</h2>
+<h3>Quiz Type:</h3>
+<select name = "type" id = "type" required>
+	<option value = "multiplication">Multiplication</option>
+	<option value = "division">Division</option>
+	<option value = "mixed">Mixed</option>
+</select>
+<h3>Number of Questions:</h3>
+<select name = "type" id = "type">
+	<option value = "50">50</option>
+	<option value = "40">40</option>
+	<option value = "30">30</option>
+	<option value = "20">20</option>
+</select>
+<h3>Time per Question (seconds):</h3>
+<select name = "time" id = "time" required>
+	<option value = "5">5</option>
+	<option value = "10">10</option>
+	<option value = "15">15</option>
+</select>
 <br>
-Once you have that set up here, we can work on handling the form submission and start the quiz
-</h3>
+
 
 <br><br>
-<button name="start-button">
-Go!</button>
+<button name="start-button" id = "go">Go!</button>
 <br>
 
 </form>
