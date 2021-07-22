@@ -65,10 +65,37 @@ h1 {
 	text-align: center;
 	margin: 10px 0 10px;
 	font-size: 40px;
-	color: #ecf0f1;
-	text-shadow: 2px 2px 4px #000000;
-	font-family: 'Cherry Swash', cursive;
+	color: black;
+	font-family: verdana;
 }
+
+#popUp
+ {
+   width: 150px;
+   height: 40px;
+   background-color: black;
+   color: white; /* SET COLOR IN WHITE */
+ }
+
+ #popUp:hover
+ {
+   background-color: green;
+   color: black; /* SET COLOR IN BLACK */
+ }
+
+#go{
+	height:30px;
+	width: 75px;
+	font-size:12pt;
+	font-family: verdana;
+}
+
+#type, #number_of_questions, #time, #export{
+	width: 150px;
+  height: 30px;
+	font-family: verdana;
+}
+
 
 #popUp
  {
