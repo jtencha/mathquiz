@@ -13,7 +13,7 @@ Set up Math Quiz database
 
 To Run Math Quiz Web Server
 
-`python start_mathquiz_server.py`
+`python run_mathquiz_server.py`
 
 Then open browser and navigate to http://localhost:5000/
 
