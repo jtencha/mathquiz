@@ -7,41 +7,49 @@ email_results_to_overlord = False
 overlord_email = ""
 
 print("Multiplication Quiz!")
-print("Last Updated: 8/1/2021")
+print("Last Updated: 8/2/2020")
 
 def generate_question(ques_type, max_number = 13):
 
-    numbers = [x for x in range(2, max_number)]
+    numbers = [x for x in range(2,max_number)]
     num_one = random.choice(numbers)
     num_two = random.choice(numbers)
 
-    # Handles Mixed/Random Choice first
+
+    # Handled Mixed/Random Choice first
     if ques_type == "4":
-        ques_type= random.choice([0, 5])
+        ques_type = random.choice([x for x in range(0, 5])
 
     # Multiplication
     if ques_type == "0":
-        return ques_type,num_one, num_two, num_one * num_two
+        sign = "*"
+        return ques_type,num_one, sign, num_two, num_one * num_two
     # Division
     elif ques_type == "1":
-        return ques_type,num_one*num_two, num_two, num_one
+        sign = "/"
+        return ques_type,num_one * num_two, sign, num_two, num_one
     # Addition
     elif ques_type == "2":
-        return ques_type,num_one, num_two, num_one + num_two
+        sign = "+"
+        return ques_type,num_one, sign, num_two, num_one + num_two
     # Subtraction
     elif ques_type == "3":
-        return ques_type,num_one + num_twp, num_one, num_two
+        sign = "-"
+        return ques_type,num_one + num_two, sign, num_one, num_two
     # Unexpected input; default to multiplication
+
     else:
-        print("Quiz type provided is not supported. Doing multiplication.")
-        return ques_type, num_one, num_two, num_one * num_two
+        print("Quiz type provided is not supported; Doing multiplication")
+        sign = "*"
+        return ques_type, num_one, sign, num_two, num_one * num_two
+    
 
 
 def mathquiz_legacy():
 
     points = 0
 
-    numbers = [x for x in range(2, 13)]
+    numbers = [x for x in range(2,13)]
 
     number_of_questions = num_questions
 
@@ -251,5 +259,3 @@ def mathquiz_legacy():
                 print("Email failed,",email_text)
         else:
             print("Email has been disabled. Enable it to send the results.")
-
-
