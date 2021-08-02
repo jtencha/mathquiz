@@ -1,5 +1,5 @@
 # mathquiz
-Notice: The front-end html/css was designed by my father because I don't know html/css that well. Python is all done by me. I tried to make this program a lot more readable than some of my others :kek:
+Front end HTML and CSS is designed with the help of my father, and python is done by me. I tried to make this program a lot more readable than some of my others :kek:
 
 Web Version:
 
@@ -20,4 +20,4 @@ Then open browser and navigate to http://localhost:5000/
 
 Classic Terminal:
 
-Run `python3 multiplication.py`
+Run `python multiplication.py`
