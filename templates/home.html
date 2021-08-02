@@ -34,32 +34,34 @@
 
 <br><br>
 <h3>{{message}}</h3>
-<form action = "/startquiz" method="post" enctype="multipart/form-data">
+<form action = "/startquiz/" method="post" enctype="multipart/form-data">
 
 <h1>Math Quiz</h1>
 <h2>Version 1.0</h2>
 <h2>Click "Go" to start the quiz!</h2>
 <h3>Quiz Type:</h3>
-<select name = "type" id = "type" required>
-	<option value = "multiplication">Multiplication</option>
-	<option value = "division">Division</option>
-	<option value = "mixed">Mixed</option>
+<select name = "quiz_type" id = "quiz_type" required>
+	<option value = "0">Multiplication</option>
+	<option value = "1">Division</option>
+	<option value = "2">Addition</option>
+	<option value = "3">Subtraction</option>
+	<option value = "4">Mixed</option>
 </select>
 <h3>Number of Questions:</h3>
-<select name = "type" id = "type">
+<select name = "num_questions" id = "num_questions">
 	<option value = "50">50</option>
 	<option value = "40">40</option>
 	<option value = "30">30</option>
 	<option value = "20">20</option>
 </select>
 <h3>Time per Question (seconds):</h3>
-<select name = "time" id = "time" required>
+<select name = "time_per" id = "time_per" required>
 	<option value = "5">5</option>
 	<option value = "10">10</option>
 	<option value = "15">15</option>
 </select>
 <br>
-
+<input type="hidden" id="curr_ques" name="curr_ques" value="0">
 
 <br><br>
 <button name="start-button" id = "go">Go!</button>

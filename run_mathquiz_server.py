@@ -7,6 +7,9 @@ from datetime import datetime, timedelta
 import csv
 from itertools import permutations
 
+# Local import
+from multiplication import generate_question
+
 # Standard initializion of Flask object
 app = Flask(__name__)
 
@@ -71,13 +74,24 @@ def getResults(UserName=None, QuizType=None, DaysAgo=365, OrderedBy=None):
 def landing():
     return render_template('home.html')
 
-# Handles requests to main web site address "/startquiz/int", which is leads being viewed by the user for a given LeadID
+
+# Handles requests to main web site address "/startquiz/"
 @app.route('/startquiz/', methods = ['GET', 'POST'])
 def startingQuiz():
 
-    # Need to handle user-submitte form elements
-    #new_record = request.args.get('name of arg')
-    return render_template('<HTML>Test</HTML>')
+    # Handle user-submitted form elements: quiz_type,num_questions,time_per,curr_ques
+    quiz_parameters = request.form
+    print(quiz_parameters)
+
+    # TODO - Need to check if question was correct
+
+    # Check if done with quiz
+    if int(quiz_parameters['curr_ques']) + 1 > int(quiz_parameters['num_questions']):
+        return render_template('scoreboard.html')
+    else:
+        # Set next question
+        ques_type, num_one, sign, num_two, solution = generate_question(quiz_parameters['quiz_type'])
+        return render_template('doquiz.html', ques_type = ques_type, num_one = num_one, sign = sign, num_two = num_two, solution = solution, quiz_parameters = quiz_parameters)
 
 
 # Handles requests to main web site address "/contact", which is a simple contact page
