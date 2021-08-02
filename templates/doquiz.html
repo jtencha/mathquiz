@@ -22,6 +22,7 @@
 	//text-align: left;
   background:#FFF;
   padding:10px 50px 50px;
+	font-size: 18px;
 }
 .sololabel {
   color:#5264AE;
@@ -31,7 +32,12 @@
 
 <div class="container">
 
-<h3> Quiz question will go here </h3>
+<h3> Question {{quiz_parameters['curr_ques']|int+1}} of {{quiz_parameters['num_questions']}} </h3>
+<br>
+{{num_one}} {{sign}} {{num_two}} = <input name="user-input" id = "answer" placeholder="Type here"></input>
+<br>
+<br>
+<button name="submit-button" id = "check">Submit</button>
 
 </div>
 </body>
