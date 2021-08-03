@@ -6,6 +6,7 @@ import time
 from datetime import datetime, timedelta
 import csv
 from itertools import permutations
+import random
 
 # Local import
 from multiplication import generate_question
@@ -83,7 +84,13 @@ def startingQuiz():
     quiz_parameters = request.form
     print(quiz_parameters)
 
-    # TODO - Need to check if question was correct
+    if "user-answer" in quiz_parameters:
+        if quiz_parameters["solution"] == quiz_parameters["user-answer"]:
+            feedback = random.choice(["Amazing!", "Great Job!", "Keep it up!", "Correct!", "Excellent!", "Awesome!"])
+            print("Correct!")
+        else:
+            feedback = random.choice(["Sorry! ", "Almost! ", "Not quite! ", "Oof! ", "*Disappointing Trombone Music* "])
+            print("Incorrect")
 
     # Check if done with quiz
     if int(quiz_parameters['curr_ques']) + 1 > int(quiz_parameters['num_questions']):
@@ -92,6 +99,7 @@ def startingQuiz():
         # Set next question
         ques_type, num_one, sign, num_two, solution = generate_question(quiz_parameters['quiz_type'])
         return render_template('doquiz.html', ques_type = ques_type, num_one = num_one, sign = sign, num_two = num_two, solution = solution, quiz_parameters = quiz_parameters)
+
 
 
 # Handles requests to main web site address "/contact", which is a simple contact page
