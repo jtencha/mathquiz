@@ -1,4 +1,4 @@
-<html>
+<!DOCTYPE html>
 <title>Orion - Home</title>
 <body>
 <head>
@@ -38,8 +38,32 @@
 {{num_one}} {{sign}} {{num_two}} = <input name="user-answer" id = "user-answer" placeholder="Type here"></input>
 <br>
 <br>
-<button name="submit-button" id = "check">Submit</button>
+<!-- Set by defaults-->
+<button class = "appear" type="button" id="check_answer" onclick="check_style_status()">Submit</button>
+<p id="feedback"></p>
+
+<script>
+function check_style_status() {
+	var solu = document.getElementById("solution").value;
+	var answer = document.getElementById("user-answer").value;
+	var proceed = document.getElementById("submit_button");
+	let text;
+	if (solu == answer) {
+	  text = "Nice work!";
+	} else {
+		text = "Not quite!";
+	}
+	// Lock submit button to prevent submitting twice
+  document.getElementById("check_answer").className="disappear";
+	document.getElementById("submit_button").className="appear";
+// Return result to page
+  document.getElementById("feedback").innerHTML = text;
+}
+</script>
+
 <br>
+<input class = "disappear" type="submit" value="Continue" id="submit_button" onclick="check_style_status()">
+
 <input type="hidden" id="solution" name="solution" value="{{solution}}">
 <input type="hidden" id="quiz_type" name="quiz_type" value="{{quiz_parameters["quiz_type"]}}">
 <input type="hidden" id="curr_ques" name="curr_ques" value="{{quiz_parameters["curr_ques"]|int + 1}}">

@@ -90,8 +90,16 @@ h1 {
 	font-family: verdana;
 }
 
-#quiz_type, #num_questions, #time_per, #check, #user-answer, #export{
+#quiz_type, #num_questions, #time_per, #check_answer, #user-answer, #submit_button, #export{
 	width: 150px;
   height: 30px;
 	font-family: verdana;
+}
+
+.disappear{
+	display: none;
+}
+
+.appear{
+	display: block;
 }
