@@ -90,23 +90,8 @@ h1 {
 	font-family: verdana;
 }
 
-#type, #number_of_questions, #time, #export{
+#quiz_type, #num_questions, #time_per, #check, #user-answer, #export{
 	width: 150px;
   height: 30px;
 	font-family: verdana;
 }
-
-
-#popUp
- {
-   width: 150px;
-   height: 40px;
-   background-color: black;
-   color: white; /* SET COLOR IN WHITE */
- }
-
- #popUp:hover
- {
-   background-color: green;
-   color: black; /* SET COLOR IN BLACK */
- }

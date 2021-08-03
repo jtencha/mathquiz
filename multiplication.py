@@ -18,7 +18,8 @@ def generate_question(ques_type, max_number = 13):
 
     # Handled Mixed/Random Choice first
     if ques_type == "4":
-        ques_type = random.choice([x for x in range(0, 5])
+        ques_type = random.choice(["0","1","2","3"])
+    print(ques_type, type(ques_type))
 
     # Multiplication
     if ques_type == "0":
@@ -39,10 +40,9 @@ def generate_question(ques_type, max_number = 13):
     # Unexpected input; default to multiplication
 
     else:
-        print("Quiz type provided is not supported; Doing multiplication")
+        print("Question type provided is not supported; Doing multiplication")
         sign = "*"
         return ques_type, num_one, sign, num_two, num_one * num_two
-    
 
 
 def mathquiz_legacy():
