@@ -40,26 +40,13 @@
 <br>
 <!-- Set by defaults-->
 <button class = "appear" type="button" id="check_answer" onclick="check_style_status()">Submit</button>
-<p id="feedback"></p>
 
-<script>
-function check_style_status() {
-	var solu = document.getElementById("solution").value;
-	var answer = document.getElementById("user-answer").value;
-	var proceed = document.getElementById("submit_button");
-	let text;
-	if (solu == answer) {
-	  text = "Nice work!";
-	} else {
-		text = "Not quite!";
-	}
-	// Lock submit button to prevent submitting twice
-  document.getElementById("check_answer").className="disappear";
-	document.getElementById("submit_button").className="appear";
-// Return result to page
-  document.getElementById("feedback").innerHTML = text;
-}
-</script>
+
+<p id="feedback"></p>
+<p id="sol"></p>
+
+
+<script src="/static/script.js"></script>
 
 <br>
 <input class = "disappear" type="submit" value="Continue" id="submit_button" onclick="check_style_status()">
