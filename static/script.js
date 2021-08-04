@@ -12,6 +12,7 @@ function check_style_status() {
 	// Lock submit button to prevent submitting twice
   document.getElementById("check_answer").className="disappear";
 	document.getElementById("submit_button").className="appear";
+	document.getElementById('user-answer').readOnly = true;
 // Return result to page
   document.getElementById("feedback").innerHTML = text;
 }
