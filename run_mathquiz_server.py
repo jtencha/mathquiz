@@ -86,21 +86,23 @@ def startingQuiz():
 
     if "user-answer" in quiz_parameters:
         if quiz_parameters["solution"] == quiz_parameters["user-answer"]:
-            feedback = random.choice(["Amazing!", "Great Job!", "Keep it up!", "Correct!", "Excellent!", "Awesome!"])
             print("Correct!")
+            print(type(quiz_parameters["correct"]))
         else:
-            feedback = random.choice(["Sorry! ", "Almost! ", "Not quite! ", "Oof! ", "*Disappointing Trombone Music* "])
+
             print("Incorrect")
 
     # Check if done with quiz
     if int(quiz_parameters['curr_ques']) + 1 > int(quiz_parameters['num_questions']):
-        return render_template('scoreboard.html')
+        return render_template('summary.html', correct = quiz_parameters["correct"], question_total = quiz_parameters["num_questions"])
     else:
         # Set next question
         ques_type, num_one, sign, num_two, solution = generate_question(quiz_parameters['quiz_type'])
         return render_template('doquiz.html', ques_type = ques_type, num_one = num_one, sign = sign, num_two = num_two, solution = solution, quiz_parameters = quiz_parameters)
 
-
+@app.route('/summary', methods = ['GET', 'POST'])
+def end():
+    return render_template('summary.html')
 
 # Handles requests to main web site address "/contact", which is a simple contact page
 @app.route('/contact', methods = ['GET','POST'])

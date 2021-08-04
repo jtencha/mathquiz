@@ -1,5 +1,5 @@
 <html>
-<title>Orion - Home</title>
+<title>MathQuiz</title>
 <body>
 <head>
 <link rel="stylesheet" href="static/style.css" type="text/css">
@@ -15,7 +15,7 @@
 
 <style>
 .container 		{
-	font-family:'Roboto';
+	font-family: "Verdana";
 	width:800px;
 	margin:30px auto 0;
 	display:block;
@@ -29,7 +29,7 @@
 }
 </style>
 
-<center>
+
 <div class="container">
 
 <br><br>
@@ -53,6 +53,7 @@
 	<option value = "40">40</option>
 	<option value = "30">30</option>
 	<option value = "20">20</option>
+	<option value = "3">Developer Mode</option>
 </select>
 <h3>Time per Question (seconds):</h3>
 <select name = "time_per" id = "time_per" required>
@@ -62,6 +63,7 @@
 </select>
 <br>
 <input type="hidden" id="curr_ques" name="curr_ques" value="0">
+<input type="hidden" id="correct" name="correct" value="0">
 
 <br><br>
 <button name="start-button" id = "go">Go!</button>
