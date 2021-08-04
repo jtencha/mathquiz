@@ -73,7 +73,13 @@ def getResults(UserName=None, QuizType=None, DaysAgo=365, OrderedBy=None):
 # Attempts a database connection and routes to first_time.html is unsuccessful
 @app.route('/' , methods = ['GET','POST'])
 def landing():
-    return render_template('home.html')
+    if request.cookies.get('user_results') or request.cookies.get('user_answers') != None:
+        user_results = ""
+        user_answers = ""
+        print("Cookies Reset")
+        return render_template('home.html')
+    else:
+        return render_template('home.html')
 
 
 # Handles requests to main web site address "/startquiz/"
