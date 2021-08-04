@@ -93,17 +93,38 @@ def startingQuiz():
         user_results = request.cookies.get('user_results')
         user_answers = request.cookies.get('user_answers')
         user_answers += quiz_parameters["user-answer"] + ";"
+        print(user_answers)
+
         if quiz_parameters["solution"] == quiz_parameters["user-answer"]:
             print("Correct!")
             #print(type(quiz_parameters["correct"]))
             user_results+="1;"
+            print(user_results)
+
         else:
             print("Incorrect")
             user_results+="0;"
+            print(user_results)
 
     # Check if done with quiz
     if int(quiz_parameters['curr_ques']) + 1 > int(quiz_parameters['num_questions']):
-        return render_template('summary.html', correct = quiz_parameters["correct"], question_total = quiz_parameters["num_questions"])
+        raw_answers = user_results.split(";", int(quiz_parameters['num_questions']))
+        correct = 0
+        for answer in raw_answers:
+            print(answer)
+            if answer == '1':
+                correct += 1
+                print(correct)
+                #Safety check to see if something went wrong
+                #You should never get to this line
+                if int(correct) > int(quiz_parameters["num_questions"]):
+                    correct = int(quiz_parameters["num_questions"])
+
+        resp = make_response(render_template('summary.html', correct = correct, question_total = quiz_parameters["num_questions"]))
+        resp.set_cookie('user_results', user_results, expires = 0)
+        resp.set_cookie('user_answers', user_answers, expires = 0)
+        return resp
+        #return render_template('summary.html', correct = user_results, question_total = quiz_parameters["num_questions"])
     else:
         # Set next question
         ques_type, num_one, sign, num_two, solution = generate_question(quiz_parameters['quiz_type'])
