@@ -15,7 +15,7 @@
 
 <style>
 .container 		{
-  font-family:'Roboto';
+  font-family:"Verdana";
   width:800px;
   margin:30px auto 0;
   display:block;
@@ -55,6 +55,7 @@
 <input type="hidden" id="quiz_type" name="quiz_type" value="{{quiz_parameters["quiz_type"]}}">
 <input type="hidden" id="curr_ques" name="curr_ques" value="{{quiz_parameters["curr_ques"]|int + 1}}">
 <input type="hidden" id="num_questions" name="num_questions" value="{{quiz_parameters["num_questions"]}}">
+<input type="hidden" id="correct" name="correct" value="{{quiz_parameters["correct"]}}">
 
 </div>
 </form>
