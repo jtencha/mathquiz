@@ -84,13 +84,22 @@ def startingQuiz():
     quiz_parameters = request.form
     print(quiz_parameters)
 
-    if "user-answer" in quiz_parameters:
+    # Coming from home page / new quiz
+    if "user-answer" not in quiz_parameters:
+        user_results = ""
+        user_answers = ""
+    # Coming from quiz answer page in quiz
+    else:
+        user_results = request.cookies.get('user_results')
+        user_answers = request.cookies.get('user_answers')
+        user_answers += quiz_parameters["user-answer"] + ";"
         if quiz_parameters["solution"] == quiz_parameters["user-answer"]:
             print("Correct!")
-            print(type(quiz_parameters["correct"]))
+            #print(type(quiz_parameters["correct"]))
+            user_results+="1;"
         else:
-
             print("Incorrect")
+            user_results+="0;"
 
     # Check if done with quiz
     if int(quiz_parameters['curr_ques']) + 1 > int(quiz_parameters['num_questions']):
@@ -98,7 +107,13 @@ def startingQuiz():
     else:
         # Set next question
         ques_type, num_one, sign, num_two, solution = generate_question(quiz_parameters['quiz_type'])
-        return render_template('doquiz.html', ques_type = ques_type, num_one = num_one, sign = sign, num_two = num_two, solution = solution, quiz_parameters = quiz_parameters)
+        #correct = request.form['correct']
+        #resp = make_response(render_template('doquiz.html', ques_type = ques_type, num_one = num_one, sign = sign, num_two = num_two, solution = solution, quiz_parameters = quiz_parameters))
+        resp = make_response(render_template('doquiz.html', ques_type = ques_type, num_one = num_one, sign = sign, num_two = num_two, solution = solution, quiz_parameters = quiz_parameters))
+        resp.set_cookie('user_results', user_results)
+        resp.set_cookie('user_answers', user_answers)
+        return resp
+
 
 @app.route('/summary', methods = ['GET', 'POST'])
 def end():
