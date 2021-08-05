@@ -103,3 +103,24 @@ h1 {
 .appear{
 	display: block;
 }
+
+table{
+    border: 2px solid #000000;
+    border-color: #000000;
+    background: #FFFFFF;
+    font-size: 18px;
+    width: 50%;
+    border-style: solid;
+    border-collapse: collapse;
+		margin:0 auto;
+}
+
+tr, td{
+		border: 2px solid black;
+}
+
+th{
+	text-align: center;
+}
+
+tr:hover {background-color: #ddd;}
