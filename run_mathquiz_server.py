@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 import csv
 from itertools import permutations
 import random
+import json
 
 # Local import
 from multiplication import generate_question
@@ -70,16 +71,15 @@ def getResults(UserName=None, QuizType=None, DaysAgo=365, OrderedBy=None):
 
 
 # Handles requests to main web site address "/"
-# Attempts a database connection and routes to first_time.html is unsuccessful
 @app.route('/' , methods = ['GET','POST'])
 def landing():
-    if request.cookies.get('user_results') or request.cookies.get('user_answers') != None:
-        user_results = ""
-        user_answers = ""
-        print("Cookies Reset")
-        return render_template('home.html')
-    else:
-        return render_template('home.html')
+    #if request.cookies.get('user_results') or request.cookies.get('user_answers') != None:
+    #    user_results = ""
+    #    user_answers = ""
+    #    print("Cookies Reset")
+    #    return render_template('home.html')
+    #else:
+    return render_template('home.html')
 
 
 # Handles requests to main web site address "/startquiz/"
@@ -87,39 +87,45 @@ def landing():
 def startingQuiz():
 
     # Handle user-submitted form elements: quiz_type,num_questions,time_per,curr_ques
-    quiz_parameters = request.form
-    print(quiz_parameters)
+    quiz_parameters = dict(request.form)
+    print(quiz_parameters, type(quiz_parameters))
+    quiz_cookie = dict()
 
     # Coming from home page / new quiz
     if "user-answer" not in quiz_parameters:
-        user_results = ""
-        user_answers = ""
-        username = quiz_parameters['username']
-        if username == "":
-            username = "Guest"
-        print(username)
-        # Coming from quiz answer page in quiz
+        quiz_cookie["user_results"] = ""
+        quiz_cookie["user_answers"] = ""
+        #username = quiz_parameters['username']
+        if 'username' not in quiz_parameters:
+            return redirect(url_for('landing'))
+        elif quiz_parameters['username'] == "":
+            quiz_cookie['username'] = "Guest"
+        else:
+            quiz_cookie['username'] = quiz_parameters['username']
+        print(quiz_parameters['username'])
+
+    # Coming from quiz answer page in quiz
     else:
-        user_results = request.cookies.get('user_results')
-        user_answers = request.cookies.get('user_answers')
-        username = request.cookies.get('username')
-        user_answers += quiz_parameters["user-answer"] + ";"
-        print(user_answers)
+        quiz_cookie = json.loads(request.cookies.get('quiz_cookie'))
+        #user_results = request.cookies.get('user_results')
+        #user_answers = request.cookies.get('user_answers')
+        #username = request.cookies.get('username')
+        quiz_cookie["user_answers"] += quiz_parameters["user-answer"] + ";"
+        print(quiz_cookie["user_answers"])
 
         if quiz_parameters["solution"] == quiz_parameters["user-answer"]:
             print("Correct!")
             #print(type(quiz_parameters["correct"]))
-            user_results+="1;"
-            print(user_results)
-
+            quiz_cookie["user_results"]+="1;"
+            print(quiz_cookie["user_results"])
         else:
             print("Incorrect")
-            user_results+="0;"
-            print(user_results)
+            quiz_cookie["user_results"]+="0;"
+            print(quiz_cookie["user_results"])
 
     # Check if done with quiz
     if int(quiz_parameters['curr_ques']) + 1 > int(quiz_parameters['num_questions']):
-        raw_answers = user_results.split(";", int(quiz_parameters['num_questions']))
+        raw_answers = quiz_cookie["user_results"].split(";", int(quiz_parameters['num_questions']))
         correct = 0
         for answer in raw_answers:
             print(answer)
@@ -142,21 +148,26 @@ def startingQuiz():
         else:
             translated_type = "Mixed"
 
-        resp = make_response(render_template('summary.html', correct = correct, question_total = quiz_parameters["num_questions"], username = username, translated_type = translated_type))
-        resp.set_cookie('user_results', user_results, expires = 0)
-        resp.set_cookie('user_answers', user_answers, expires = 0)
-        resp.set_cookie('username', username, expires = 0)
+        resp = make_response(render_template('summary.html', correct = correct, question_total = quiz_parameters["num_questions"], username = quiz_cookie['username'], translated_type = translated_type))
+        resp.delete_cookie('quiz_cookie')
+        #resp.set_cookie('quiz_cookie', quiz_cookie, expires = 0)
+        #resp.set_cookie('user_results', user_results, expires = 0)
+        #resp.set_cookie('user_answers', user_answers, expires = 0)
+        #resp.set_cookie('username', username, expires = 0)
         return resp
         #return render_template('summary.html', correct = user_results, question_total = quiz_parameters["num_questions"])
     else:
         # Set next question
-        ques_type, num_one, sign, num_two, solution = generate_question(quiz_parameters['quiz_type'])
+        # Map all of these into quiz_parameters so you don't have to pass in a resp with a million single variables
+        quiz_parameters["ques_type"], quiz_parameters["num_one"], quiz_parameters["sign"], quiz_parameters["num_two"], quiz_parameters["solution"] = generate_question(quiz_parameters['quiz_type'])
         #correct = request.form['correct']
         #resp = make_response(render_template('doquiz.html', ques_type = ques_type, num_one = num_one, sign = sign, num_two = num_two, solution = solution, quiz_parameters = quiz_parameters))
-        resp = make_response(render_template('doquiz.html', ques_type = ques_type, num_one = num_one, sign = sign, num_two = num_two, solution = solution, quiz_parameters = quiz_parameters, username = username))
-        resp.set_cookie('user_results', user_results)
-        resp.set_cookie('user_answers', user_answers)
-        resp.set_cookie('username', username)
+        #resp = make_response(render_template('doquiz.html', ques_type = ques_type, num_one = num_one, sign = sign, num_two = num_two, solution = solution, quiz_parameters = quiz_parameters, username = quiz_cookie['username']))
+        resp = make_response(render_template('doquiz.html', quiz_parameters = quiz_parameters, username = quiz_cookie['username']))
+        resp.set_cookie('quiz_cookie', json.dumps(quiz_cookie))
+        #resp.set_cookie('user_results', user_results)
+        #resp.set_cookie('user_answers', user_answers)
+        #resp.set_cookie('username', username)
         return resp
 
 
