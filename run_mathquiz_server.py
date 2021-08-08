@@ -3,7 +3,7 @@ import sqlite3
 import os
 import sys
 import time
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 import csv
 from itertools import permutations
 import random
@@ -148,6 +148,17 @@ def startingQuiz():
         else:
             translated_type = "Mixed"
 
+        # Add user results to database
+        '''
+        TABLE RESULTS (ResultID integer PRIMARY KEY AUTOINCREMENT, \
+                            UserName text, NumQuestions integer, NumCorrect integer, \
+                            NumWrong integer, RunDate date, RunDuration integer, QuizType text)
+        '''
+        num_questions = int(quiz_parameters["num_questions"])
+        wrong = num_questions - correct
+        results_insert_sql = "INSERT INTO RESULTS (UserName,NumQuestions,NumCorrect,NumWrong,RunDate,RunDuration,QuizType) VALUES ('{0}',{1},{2},{3},'{4}',{5},'{6}')".format(quiz_cookie['username'],num_questions,correct,wrong,date.today(),0,translated_type)
+        print(results_insert_sql)
+        run_sql_query(results_insert_sql, query=False)
         resp = make_response(render_template('summary.html', correct = correct, question_total = quiz_parameters["num_questions"], username = quiz_cookie['username'], translated_type = translated_type))
         resp.delete_cookie('quiz_cookie')
         #resp.set_cookie('quiz_cookie', quiz_cookie, expires = 0)
