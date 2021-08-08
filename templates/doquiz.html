@@ -35,7 +35,7 @@
 
 <h3> Question {{quiz_parameters['curr_ques']|int+1}} of {{quiz_parameters['num_questions']}} </h3>
 <br>
-{{num_one}} {{sign}} {{num_two}} = <input name="user-answer" id = "user-answer" placeholder="Type here"></input>
+{{quiz_parameters['num_one']}} {{quiz_parameters['sign']}} {{quiz_parameters['num_two']}} = <input name="user-answer" id = "user-answer" placeholder="Type here"></input>
 <br>
 <br>
 <!-- Set by defaults-->
@@ -51,12 +51,11 @@
 <br>
 <input class = "disappear" type="submit" value="Continue" id="submit_button">
 
-<input type="hidden" id="solution" name="solution" value="{{solution}}">
+<input type="hidden" id="solution" name="solution" value="{{quiz_parameters['solution']}}">
 <input type="hidden" id="quiz_type" name="quiz_type" value="{{quiz_parameters["quiz_type"]}}">
 <input type="hidden" id="curr_ques" name="curr_ques" value="{{quiz_parameters["curr_ques"]|int + 1}}">
 <input type="hidden" id="num_questions" name="num_questions" value="{{quiz_parameters["num_questions"]}}">
 <input type="hidden" id="correct" name="correct" value="{{quiz_parameters["correct"]}}">
-
 </div>
 </form>
 </body>
