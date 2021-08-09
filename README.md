@@ -15,7 +15,8 @@ To Run Math Quiz Web Server
 
 `python run_mathquiz_server.py`
 
-Then open browser and navigate to http://localhost:5000/
+Then open browser and navigate to http://0.0.0.0:5000/
+Fill in the zeroes with your IP.
 
 
 Classic Terminal:
