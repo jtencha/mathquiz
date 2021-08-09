@@ -33,7 +33,29 @@
 <div class="container">
 <br><br>
 <h1>Scoreboard</h1>
-
+<br>
+{% if top_n_quiz_results|length==0 %}
+No completed quizzes found!
+{% endif %}
+<br>
+<table border="0" cellpadding="10">
+	<tr>
+	<th>User Name</th>
+	<th>Quiz Date</th>
+	<th>Quiz Type</th>
+	<th>Questions</th>
+	<th>Percentage</th>
+	</tr>
+{% for top_n_quiz_result in top_n_quiz_results %}
+	<tr>
+	<td>{{top_n_quiz_result["UserName"]}}</td>
+	<td>{{top_n_quiz_result["RunDate"]}}</td>
+	<td>{{top_n_quiz_result["QuizType"]}}</td>
+	<td>{{top_n_quiz_result["NumQuestions"]}}</td>
+	<td>{{top_n_quiz_result["PercentageRight"]}}</td>
+	</tr>
+{% endfor %}
+</table>
 </center>
 
 </body>
