@@ -1,5 +1,5 @@
 '''
-This module should be run ONCE to initialize a new sqlite3 database file for the mathquiz program.
+This module should be run once to initialize a new sqlite3 database file for the mathquiz program.
 WARNING - Running this module will result in the loss of an existing mathquiz database of the same name.
 
 Execute this file on a python command line by supplying the full path to a new database file.
@@ -32,7 +32,7 @@ def initialize_db(db_name):
             sqlite_connection.commit()
             sqlite_cursor.execute("CREATE TABLE RESULTS (ResultID integer PRIMARY KEY AUTOINCREMENT, \
                                 UserName text, NumQuestions integer, NumCorrect integer, \
-                                NumWrong integer, RunDate date, RunDuration integer, QuizType text)")
+                                NumWrong integer, PercentageRight real, RunDate date, RunDuration integer, QuizType text)")
             sqlite_connection.commit()
             print("Created RESULTS table")
 
