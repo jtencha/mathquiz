@@ -100,6 +100,9 @@ def startingQuiz():
             return redirect(url_for('landing'))
         elif quiz_parameters['username'] == "":
             quiz_cookie['username'] = "Guest"
+        elif quiz_parameters['username'] == "40314":
+            quiz_cookie['username'] = "Guest"
+            quiz_parameters['num_questions'] = 3
         else:
             quiz_cookie['username'] = quiz_parameters['username']
         print(quiz_parameters['username'])
@@ -152,11 +155,11 @@ def startingQuiz():
         '''
         TABLE RESULTS (ResultID integer PRIMARY KEY AUTOINCREMENT, \
                             UserName text, NumQuestions integer, NumCorrect integer, \
-                            NumWrong integer, RunDate date, RunDuration integer, QuizType text)
+                            NumWrong integer, PercentageRight real, RunDate date, RunDuration integer, QuizType text)
         '''
         num_questions = int(quiz_parameters["num_questions"])
         wrong = num_questions - correct
-        results_insert_sql = "INSERT INTO RESULTS (UserName,NumQuestions,NumCorrect,NumWrong,RunDate,RunDuration,QuizType) VALUES ('{0}',{1},{2},{3},'{4}',{5},'{6}')".format(quiz_cookie['username'],num_questions,correct,wrong,date.today(),0,translated_type)
+        results_insert_sql = "INSERT INTO RESULTS (UserName,NumQuestions,NumCorrect,NumWrong,RunDate,RunDuration,QuizType,PercentageRight) VALUES ('{0}',{1},{2},{3},'{4}',{5},'{6}',{7})".format(quiz_cookie['username'],num_questions,correct,wrong,date.today(),0,translated_type,round(float(correct)/num_questions,2))
         print(results_insert_sql)
         run_sql_query(results_insert_sql, query=False)
         resp = make_response(render_template('summary.html', correct = correct, question_total = quiz_parameters["num_questions"], username = quiz_cookie['username'], translated_type = translated_type))
@@ -195,15 +198,28 @@ def contacting():
 # Handles requests to main web site address "/scoreboard", which is a results scoreboard page
 @app.route('/scoreboard', methods = ['GET','POST'])
 def scoring():
-    # TODO - lots of work here once quizzes are working and being recorded in db
-    return render_template('scoreboard.html')
+
+    # Pull user results from database
+    '''
+    TABLE RESULTS (ResultID integer PRIMARY KEY AUTOINCREMENT, \
+                        UserName text, NumQuestions integer, NumCorrect integer, \
+                        NumWrong integer, PercentageRight real, RunDate date, RunDuration integer, QuizType text)
+    '''
+    results_retrieve_sql = "SELECT UserName,NumQuestions,NumCorrect,NumWrong,PercentageRight,RunDate,RunDuration,QuizType FROM RESULTS ORDER BY PercentageRight DESC"
+    print(results_retrieve_sql)
+    top_n_limit = 20
+    success,top_n_quiz_results = run_sql_query(results_retrieve_sql)[:top_n_limit]
+    if not success:
+        top_n_quiz_results = []
+    print(top_n_quiz_results)
+    return render_template('scoreboard.html', top_n_quiz_results=top_n_quiz_results)
 
 
 # Handles requests to main web site address "/export", which is how results can be exported from the database to a csv file
 @app.route('/export', methods = ['GET','POST'])
 def exporting():
 
-    sql = "SELECT ResultID, UserName, NumQuestions, NumCorrect, NumWrong, RunDate, RunDuration, QuizType FROM RESULTS ORDER BY ResultID"
+    sql = "SELECT ResultID, UserName, NumQuestions, NumCorrect, NumWrong, PercentageRight, RunDate, RunDuration, QuizType FROM RESULTS ORDER BY ResultID"
     status, searchResults = run_sql_query(sql, return_as_dict=False)
     if status is False or searchResults is None:
         return "Failed"
