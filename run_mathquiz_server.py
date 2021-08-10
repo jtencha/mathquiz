@@ -205,7 +205,7 @@ def scoring():
                         UserName text, NumQuestions integer, NumCorrect integer, \
                         NumWrong integer, PercentageRight real, RunDate date, RunDuration integer, QuizType text)
     '''
-    results_retrieve_sql = "SELECT UserName,NumQuestions,NumCorrect,NumWrong,PercentageRight,RunDate,RunDuration,QuizType FROM RESULTS ORDER BY PercentageRight DESC"
+    results_retrieve_sql = "SELECT UserName,NumQuestions,NumCorrect,NumWrong,PercentageRight,RunDate,RunDuration,QuizType FROM RESULTS WHERE NumQuestions!=3 ORDER BY PercentageRight DESC"
     print(results_retrieve_sql)
     top_n_limit = 20
     success,top_n_quiz_results = run_sql_query(results_retrieve_sql)[:top_n_limit]
