@@ -73,12 +73,6 @@ def getResults(UserName=None, QuizType=None, DaysAgo=365, OrderedBy=None):
 # Handles requests to main web site address "/"
 @app.route('/' , methods = ['GET','POST'])
 def landing():
-    #if request.cookies.get('user_results') or request.cookies.get('user_answers') != None:
-    #    user_results = ""
-    #    user_answers = ""
-    #    print("Cookies Reset")
-    #    return render_template('home.html')
-    #else:
     return render_template('home.html')
 
 
@@ -90,6 +84,13 @@ def startingQuiz():
     quiz_parameters = dict(request.form)
     print(quiz_parameters, type(quiz_parameters))
     quiz_cookie = dict()
+
+    # TODO - Fix these hidden field hacks on doquiz.html
+    #<input type="hidden" id="solution" name="solution" value="{{quiz_parameters["solution"]}}">
+    #<input type="hidden" id="quiz_type" name="quiz_type" value="{{quiz_parameters["quiz_type"]}}">
+    #<input type="hidden" id="curr_ques" name="curr_ques" value="{{quiz_parameters["curr_ques"]|int + 1}}">
+    #<input type="hidden" id="num_questions" name="num_questions" value="{{quiz_parameters["num_questions"]}}">
+    #<input type="hidden" id="correct" name="correct" value="{{quiz_parameters["correct"]}}">
 
     # Coming from home page / new quiz
     if "user-answer" not in quiz_parameters:
@@ -110,9 +111,6 @@ def startingQuiz():
     # Coming from quiz answer page in quiz
     else:
         quiz_cookie = json.loads(request.cookies.get('quiz_cookie'))
-        #user_results = request.cookies.get('user_results')
-        #user_answers = request.cookies.get('user_answers')
-        #username = request.cookies.get('username')
         quiz_cookie["user_answers"] += quiz_parameters["user-answer"] + ";"
         print(quiz_cookie["user_answers"])
 
@@ -164,24 +162,14 @@ def startingQuiz():
         run_sql_query(results_insert_sql, query=False)
         resp = make_response(render_template('summary.html', correct = correct, question_total = quiz_parameters["num_questions"], username = quiz_cookie['username'], translated_type = translated_type))
         resp.delete_cookie('quiz_cookie')
-        #resp.set_cookie('quiz_cookie', quiz_cookie, expires = 0)
-        #resp.set_cookie('user_results', user_results, expires = 0)
-        #resp.set_cookie('user_answers', user_answers, expires = 0)
-        #resp.set_cookie('username', username, expires = 0)
         return resp
-        #return render_template('summary.html', correct = user_results, question_total = quiz_parameters["num_questions"])
+
     else:
         # Set next question
         # Map all of these into quiz_parameters so you don't have to pass in a resp with a million single variables
         quiz_parameters["ques_type"], quiz_parameters["num_one"], quiz_parameters["sign"], quiz_parameters["num_two"], quiz_parameters["solution"] = generate_question(quiz_parameters['quiz_type'])
-        #correct = request.form['correct']
-        #resp = make_response(render_template('doquiz.html', ques_type = ques_type, num_one = num_one, sign = sign, num_two = num_two, solution = solution, quiz_parameters = quiz_parameters))
-        #resp = make_response(render_template('doquiz.html', ques_type = ques_type, num_one = num_one, sign = sign, num_two = num_two, solution = solution, quiz_parameters = quiz_parameters, username = quiz_cookie['username']))
         resp = make_response(render_template('doquiz.html', quiz_parameters = quiz_parameters, username = quiz_cookie['username']))
         resp.set_cookie('quiz_cookie', json.dumps(quiz_cookie))
-        #resp.set_cookie('user_results', user_results)
-        #resp.set_cookie('user_answers', user_answers)
-        #resp.set_cookie('username', username)
         return resp
 
 
