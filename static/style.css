@@ -90,7 +90,7 @@ h1 {
 	font-family: verdana;
 }
 
-#quiz_type, #num_questions, #time_per, #check_answer, #user-answer, #submit_button, #export, #see_advanced_results, #username{
+#quiz_type, #num_questions, #time_per, #check_answer, #user_answer, #submit_button, #export, #see_advanced_results, #username{
 	width: 150px;
   height: 30px;
 	font-family: verdana;
