@@ -8,6 +8,7 @@ import csv
 from itertools import permutations
 import random
 import json
+import time
 
 # Local import
 from multiplication import generate_question
@@ -93,7 +94,7 @@ def startingQuiz():
     #<input type="hidden" id="correct" name="correct" value="{{quiz_parameters["correct"]}}">
 
     # Coming from home page / new quiz
-    if "user-answer" not in quiz_parameters:
+    if "user_answer" not in quiz_parameters:
         quiz_cookie["user_results"] = ""
         quiz_cookie["user_answers"] = ""
         #username = quiz_parameters['username']
@@ -111,10 +112,10 @@ def startingQuiz():
     # Coming from quiz answer page in quiz
     else:
         quiz_cookie = json.loads(request.cookies.get('quiz_cookie'))
-        quiz_cookie["user_answers"] += quiz_parameters["user-answer"] + ";"
+        quiz_cookie["user_answers"] += quiz_parameters["user_answer"] + ";"
         print(quiz_cookie["user_answers"])
 
-        if quiz_parameters["solution"] == quiz_parameters["user-answer"]:
+        if quiz_parameters["solution"] == quiz_parameters["user_answer"]:
             print("Correct!")
             #print(type(quiz_parameters["correct"]))
             quiz_cookie["user_results"]+="1;"
@@ -157,7 +158,7 @@ def startingQuiz():
         '''
         num_questions = int(quiz_parameters["num_questions"])
         wrong = num_questions - correct
-        results_insert_sql = "INSERT INTO RESULTS (UserName,NumQuestions,NumCorrect,NumWrong,RunDate,RunDuration,QuizType,PercentageRight) VALUES ('{0}',{1},{2},{3},'{4}',{5},'{6}',{7})".format(quiz_cookie['username'],num_questions,correct,wrong,date.today(),0,translated_type,round(float(correct)/num_questions,2))
+        results_insert_sql = "INSERT INTO RESULTS (UserName,NumQuestions,NumCorrect,NumWrong,RunDate,RunDuration,QuizType,PercentageRight) VALUES ('{0}',{1},{2},{3},'{4}',{5},'{6}',{7})".format(quiz_cookie['username'],num_questions,correct,wrong,date.today(),0,translated_type, 100 * (round(float(correct)/num_questions,2)))
         print(results_insert_sql)
         run_sql_query(results_insert_sql, query=False)
         resp = make_response(render_template('summary.html', correct = correct, question_total = quiz_parameters["num_questions"], username = quiz_cookie['username'], translated_type = translated_type))

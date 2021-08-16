@@ -30,12 +30,12 @@
 }
 </style>
 
-<form action = "/startquiz/" method="post" enctype="multipart/form-data">
+<form action = "/startquiz/" method="post" enctype="multipart/form-data" name="doquiz">
 <div class="container">
 
 <h3> Question {{quiz_parameters['curr_ques']|int+1}} of {{quiz_parameters['num_questions']}} </h3>
 <br>
-{{quiz_parameters['num_one']}} {{quiz_parameters['sign']}} {{quiz_parameters['num_two']}} = <input name="user-answer" id = "user-answer" placeholder="Type here"></input>
+{{quiz_parameters['num_one']}} {{quiz_parameters['sign']}} {{quiz_parameters['num_two']}} = <input name="user_answer" id = "user_answer" placeholder="Type here"></input>
 <br>
 <br>
 <!-- Set by defaults-->
@@ -51,11 +51,13 @@
 <br>
 <input class = "disappear" type="submit" value="Continue" id="submit_button">
 
+<!-- Make all of these cookies -->
 <input type="hidden" id="solution" name="solution" value="{{quiz_parameters['solution']}}">
 <input type="hidden" id="quiz_type" name="quiz_type" value="{{quiz_parameters["quiz_type"]}}">
 <input type="hidden" id="curr_ques" name="curr_ques" value="{{quiz_parameters["curr_ques"]|int + 1}}">
 <input type="hidden" id="num_questions" name="num_questions" value="{{quiz_parameters["num_questions"]}}">
 <input type="hidden" id="correct" name="correct" value="{{quiz_parameters["correct"]}}">
+<input type="hidden" id="time_per" name="time_per" value="{{quiz_parameters["time_per"]}}">
 </div>
 </form>
 </body>
