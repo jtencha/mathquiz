@@ -33,27 +33,30 @@
 <div class="container">
 <br><br>
 <h1>Scoreboard</h1>
-<br>
-{% if top_n_quiz_results|length==0 %}
-No completed quizzes found!
-{% endif %}
-<br>
 <table border="0" cellpadding="10">
 	<tr>
-	<th>User Name</th>
-	<th>Quiz Date</th>
-	<th>Quiz Type</th>
-	<th>Questions</th>
-	<th>Percentage</th>
+	  <th>User Name</th>
+	  <th>Quiz Date</th>
+          <th>Quiz Type</th>
+        	<th>Questions</th>
+		<th>Percentage</th>
+		<th>Duration</td>
 	</tr>
+
 {% for top_n_quiz_result in top_n_quiz_results %}
-	<tr>
-	<td>{{top_n_quiz_result["UserName"]}}</td>
-	<td>{{top_n_quiz_result["RunDate"]}}</td>
-	<td>{{top_n_quiz_result["QuizType"]}}</td>
-	<td>{{top_n_quiz_result["NumQuestions"]}}</td>
-	<td>{{top_n_quiz_result["PercentageRight"]}}</td>
+   {% for group_result in top_n_quiz_result %}
+        <tr>
+		<td>{{group_result["UserName"]}}</td>
+		<td>{{group_result["RunDate"]}}</td>
+		<td>{{group_result["QuizType"]}}</td>
+		<td>{{group_result["NumQuestions"]}}</td>
+		<td>{{group_result["PercentageRight"]}}</td>
+		<td>{{group_result["RunDuration"]}}</td>
 	</tr>
+    {% endfor %}
+    {% if top_n_quiz_result|length!=0 %}
+    <tr><td style="text-align:center"  colspan="6">------</td></tr>
+    {% endif %}
 {% endfor %}
 </table>
 </center>
