@@ -194,13 +194,18 @@ def scoring():
                         UserName text, NumQuestions integer, NumCorrect integer, \
                         NumWrong integer, PercentageRight real, RunDate date, RunDuration integer, QuizType text)
     '''
-    results_retrieve_sql = "SELECT UserName,NumQuestions,NumCorrect,NumWrong,PercentageRight,RunDate,RunDuration,QuizType FROM RESULTS WHERE NumQuestions!=3 ORDER BY PercentageRight DESC"
-    print(results_retrieve_sql)
+    results_retrieve_sql = "SELECT UserName,NumQuestions,NumCorrect,NumWrong,PercentageRight,RunDate,RunDuration,QuizType FROM RESULTS WHERE NumQuestions=$$$ ORDER BY PercentageRight DESC, RunDuration ASC"
+    ques_options = ["50","40","30","20"] 
     top_n_limit = 20
-    success,top_n_quiz_results = run_sql_query(results_retrieve_sql)[:top_n_limit]
-    if not success:
-        top_n_quiz_results = []
-    print(top_n_quiz_results)
+    top_n_quiz_results = []
+    for option in ques_options:
+        run_sql = results_retrieve_sql.replace("$$$",option)
+        success,results = run_sql_query(run_sql)[:top_n_limit]
+        if success:
+            top_n_quiz_results.append(results)
+        else:
+            top_n_quiz_results.append([])
+    
     return render_template('scoreboard.html', top_n_quiz_results=top_n_quiz_results)
 
 
