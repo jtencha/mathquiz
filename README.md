@@ -21,4 +21,4 @@ Fill in the zeroes with your IP.
 
 Classic Terminal:
 
-Run `python multiplication.py`
+Run `python legacy.py`
