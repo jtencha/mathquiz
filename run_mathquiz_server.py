@@ -1,3 +1,4 @@
+from waitress import serve
 from flask import Flask,render_template,request,redirect, make_response, url_for, abort, send_file
 import sqlite3
 import os
@@ -234,5 +235,7 @@ def exporting():
         return str(e)
 
 
-# Kick off app locally on port 5000
-app.run(host='0.0.0.0', port=5000)
+# Kick off app locally on port 80
+#app.run(host='0.0.0.0', port=80)
+#app = Flask(__name__)
+serve(app, host='0.0.0.0', port=8080)
