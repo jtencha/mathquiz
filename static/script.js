@@ -4,11 +4,11 @@ function timer() {
 }
 
 function check_style_status() {
-	var time = timer();
-	var cap = document.getElementById("time_per").value;
-	var solution = document.getElementById("solution").value;
-	var answer = document.getElementById("user_answer").value;
-	var proceed = document.getElementById("submit_button");
+	let time = timer();
+	let cap = document.getElementById("time_per").value;
+	let solution = document.getElementById("solution").value;
+	let answer = document.getElementById("user_answer").value;
+	let proceed = document.getElementById("submit_button");
 	let text;
 	if (time > cap) {
 		//set the answer as none so the python reads it as incorrect
@@ -16,15 +16,15 @@ function check_style_status() {
 		text = "You exceeded your " + cap + " second limit!";
 	}
 	else if (solution == answer) {
-		var responses = [ "Nice Work!", "Awesome!", "Excellent!", "Great Job!"];
-		var picking = Math.floor(Math.random() * responses.length);
-  	var final = responses[picking];
-	  text = final;
+		let responses = [ "Nice Work!", "Awesome!", "Excellent!", "Great Job!"];
+		let picking = Math.floor(Math.random() * responses.length);
+  		let final = responses[picking];
+	  	text = final;
 	} else {
-		var responses = ["Almost! ", "Not quite! ", "Oof! ", "*Disappointing Trombone Music* "]
-		var picking = Math.floor(Math.random() * responses.length);
-		var final = responses[picking];
-    text = final + "The correct answer was " + solution + ".";
+		let responses = ["Almost! ", "Not quite! ", "Oof! ", "*Disappointing Trombone Music* "]
+		let picking = Math.floor(Math.random() * responses.length);
+		let final = responses[picking];
+    		text = final + "The correct answer was " + solution + ".";
 	}
 // Lock submit button to prevent submitting twice
 document.getElementById("check_answer").className="disappear";
