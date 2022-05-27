@@ -94,6 +94,7 @@ h1 {
 	width: 150px;
   height: 30px;
 	font-family: verdana;
+	text-align: center;
 }
 
 .disappear{
@@ -102,4 +103,10 @@ h1 {
 
 .appear{
 	display: block;
+}
+
+#user_answer {
+	width: 75px;
+	height: 30px;
+	font-family: verdana;
 }

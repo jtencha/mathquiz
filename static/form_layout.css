@@ -1,7 +1,7 @@
 * { box-sizing:border-box; }
 
-
-.container{
+/* basic stylings ------------------------------------------ */
+.container 		{
   font-family:'Roboto';
   width:600px;
   margin:30px auto 0;
@@ -9,22 +9,22 @@
   background:#FFF;
   padding:10px 50px 50px;
 }
-h2{
+h2 		 {
   text-align:center;
   margin-bottom:50px;
 }
-h2 small{
+h2 small {
   font-weight:normal;
   color:#888;
   display:block;
 }
 
-
-.group{
+/* form starting stylings ------------------------------- */
+.group 			  {
   position:relative;
   margin-bottom:45px;
 }
-input{
+input 				{
   font-size:18px;
   padding:10px 10px 10px 5px;
   display:block;
@@ -34,8 +34,8 @@ input{
 }
 input:focus 		{ outline:none; }
 
-
-label{
+/* LABEL ======================================= */
+label 				 {
   color:#999;
   font-size:18px;
   font-weight:normal;
@@ -49,32 +49,35 @@ label{
 }
 
 /* active state */
-input:focus ~ label, input:valid ~ label{
+input:focus ~ label, input:valid ~ label 		{
   top:-20px;
   font-size:14px;
   color:#5264AE;
 }
 
-.sololabel{
+.sololabel {
   font-size:14px;
   color:#5264AE;
 }
 
-#popUp{
+#popUp
+ {
    //width: 60px;
    //height: 30px;
    background-color: black;
    color: white; /* SET COLOR IN WHITE */
  }
 
- #popUp:hover{
+ #popUp:hover
+ {
    background-color: green;
    color: black; /* SET COLOR IN BLACK */
  }
 
 
+/* BOTTOM BARS ================================= */
 .bar 	{ position:relative; display:block; width:300px; }
-.bar:before, .bar:after{
+.bar:before, .bar:after 	{
   content:'';
   height:2px;
   width:0;
